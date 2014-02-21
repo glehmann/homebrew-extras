@@ -33,59 +33,88 @@ class Dia < Formula
 end
 
 __END__
-diff --git a/objects/custom/shape_typeinfo.c b/objects/custom/shape_typeinfo.c
-index c6133b1..3fb3d73 100644
---- a/objects/custom/shape_typeinfo.c
-+++ b/objects/custom/shape_typeinfo.c
-@@ -27,7 +27,7 @@
- #include "custom_util.h"
- #include <string.h>
- #include <stdarg.h>
--#include <glib/gstrfuncs.h>
-+#include <glib.h>
- #include <glib/gstdio.h>
- #include <libxml/parser.h>
+diff --git a/app/render_gdk.c b/app/render_gdk.c
+index f6692dd..23e4226 100644
+--- a/app/render_gdk.c
++++ b/app/render_gdk.c
+@@ -63,7 +63,21 @@ static void draw_object_highlighted (DiaRenderer *renderer,
+                                      DiaObject *object,
+                                      DiaHighlightType type);
  
-diff --git a/plug-ins/pgf/render_pgf.c b/plug-ins/pgf/render_pgf.c
-index 3fe5bbd..24b812e 100644
---- a/plug-ins/pgf/render_pgf.c
-+++ b/plug-ins/pgf/render_pgf.c
-@@ -61,7 +61,7 @@ TODO:
- #endif
- #include <errno.h>
+-static void dia_gdk_renderer_iface_init (DiaInteractiveRendererInterface* iface)
++typedef struct _DiaGdkInteractiveRenderer DiaGdkInteractiveRenderer;
++struct _DiaGdkInteractiveRenderer
++{
++  DiaGdkRenderer parent_instance; /*!< inheritance in object oriented C */
++};
++typedef struct _DiaGdkInteractiveRendererClass DiaGdkInteractiveRendererClass;
++struct _DiaGdkInteractiveRendererClass
++{
++  DiaGdkRendererClass parent_class; /*!< the base class */
++};
++#define DIA_TYPE_GDK_INTERACTIVE_RENDERER           (dia_gdk_interactive_renderer_get_type ())
++#define DIA_GDK_INTERACTIVE_RENDERER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DIA_TYPE_GDK_INTERACTIVE_RENDERER, DiaGdkInteractiveRenderer))
++
++static void
++dia_gdk_renderer_iface_init (DiaInteractiveRendererInterface* iface)
+ {
+   iface->clip_region_clear = clip_region_clear;
+   iface->clip_region_add_rect = clip_region_add_rect;
+@@ -75,35 +89,35 @@ static void dia_gdk_renderer_iface_init (DiaInteractiveRendererInterface* iface)
+   iface->draw_object_highlighted = draw_object_highlighted;
+ }
  
--#include <glib/gprintf.h>
-+#include <glib.h>
- #include <glib/gstdio.h>
++G_DEFINE_TYPE_WITH_CODE (DiaGdkInteractiveRenderer, dia_gdk_interactive_renderer, DIA_TYPE_GDK_RENDERER,
++			 G_IMPLEMENT_INTERFACE (DIA_TYPE_INTERACTIVE_RENDERER_INTERFACE, dia_gdk_renderer_iface_init));
++
++static void
++dia_gdk_interactive_renderer_class_init(DiaGdkInteractiveRendererClass *klass)
++{
++}
++static void
++dia_gdk_interactive_renderer_init(DiaGdkInteractiveRenderer *object)
++{
++  DiaGdkInteractiveRenderer *ia_renderer = DIA_GDK_INTERACTIVE_RENDERER (object);
++  DiaGdkRenderer *renderer = DIA_GDK_RENDERER(object);
++  DiaRenderer *dia_renderer = DIA_RENDERER(object);
++  
++  dia_renderer->is_interactive = 1;
++
++  renderer->gc = NULL;
++  renderer->pixmap = NULL;
++  renderer->clip_region = NULL;
++}
++
+ DiaRenderer *
+ new_gdk_renderer(DDisplay *ddisp)
+ {
+   DiaGdkRenderer *renderer;
+   GType renderer_type = 0;
  
- #include "intl.h"
-diff --git a/tests/test-boundingbox.c b/tests/test-boundingbox.c
-index 7adaab5..a13d018 100644
---- a/tests/test-boundingbox.c
-+++ b/tests/test-boundingbox.c
-@@ -28,9 +28,6 @@
- #include <glib.h>
- #include <glib-object.h>
- 
--#if GLIB_CHECK_VERSION(2,16,0)
--#include <glib/gtestutils.h>
--#endif
- #include "dialib.h"
- 
- /*
-diff --git a/tests/test-objects.c b/tests/test-objects.c
-index 57d5675..c5980a5 100644
---- a/tests/test-objects.c
-+++ b/tests/test-objects.c
-@@ -28,10 +28,6 @@
- #include <glib.h>
- #include <glib-object.h>
- 
--#if GLIB_CHECK_VERSION(2,16,0)
--#include <glib/gtestutils.h>
--#endif
+-  renderer = g_object_new (DIA_TYPE_GDK_RENDERER, NULL);
++  renderer = g_object_new (DIA_TYPE_GDK_INTERACTIVE_RENDERER, NULL);
+   renderer->transform = dia_transform_new (&ddisp->visible, &ddisp->zoom_factor);
+-  if (!DIA_GET_INTERACTIVE_RENDERER_INTERFACE (renderer))
+-    {
+-      static const GInterfaceInfo irenderer_iface_info = 
+-      {
+-        (GInterfaceInitFunc) dia_gdk_renderer_iface_init,
+-        NULL,           /* iface_finalize */
+-        NULL            /* iface_data     */
+-      };
 -
- #include "object.h"
- #include "plug-ins.h"
- #include "dialib.h"
+-      renderer_type = DIA_TYPE_GDK_RENDERER;
+-      /* register the interactive renderer interface */
+-      g_type_add_interface_static (renderer_type,
+-                                   DIA_TYPE_INTERACTIVE_RENDERER_INTERFACE,
+-                                   &irenderer_iface_info);
+-
+-    }
+-  renderer->parent_instance.is_interactive = 1;
+-  renderer->gc = NULL;
+-
+-  renderer->pixmap = NULL;
+-  renderer->clip_region = NULL;
  
+   return DIA_RENDERER(renderer);
+ }

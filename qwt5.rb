@@ -3,7 +3,7 @@ require 'formula'
 class Qwt5 < Formula
   url 'http://sourceforge.net/projects/qwt/files/qwt/5.2.1/qwt-5.2.1.tar.bz2'
   homepage 'http://qwt.sourceforge.net/'
-  md5 '4a595b8db0ec3856b117836c1d60cb27'
+  sha1 '89de7a90b7eddad2989470627baa19d59e348df1'
 
   depends_on 'qt'
 

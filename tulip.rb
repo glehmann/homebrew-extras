@@ -6,9 +6,10 @@ class Tulip < Formula
   sha1 "91a88e011f441f836c903842b138b2b304794a39"
 
   depends_on "cmake" => :build
+  depends_on "sip" => :build
   depends_on "glew"
   depends_on "qt"
-  depends_on "sip"
+  depends_on :freetype
 
   def patches
     # fixes compilation with glib 2.31+

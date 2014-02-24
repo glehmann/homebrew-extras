@@ -5,6 +5,8 @@ class DocbookSlides < Formula
   url 'http://sourceforge.net/projects/docbook/files/slides/3.4.0/docbook-slides-3.4.0.tar.bz2'
   sha1 '798b43ebbbb6a49c67335aa86d5cad33d61015c2'
 
+  depends_on 'docbook'
+
   def install
     prefix.install %w[AUTHORS
       BUGS

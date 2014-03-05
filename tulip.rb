@@ -121,3 +121,28 @@ index 142bc5c..45b8eee 100755
 -///@endcond
 \ No newline at end of file
 +///@endcond
+diff --git a/library/tulip-ogl/src/OpenGlConfigManager.cpp b/library/tulip-ogl/src/OpenGlConfigManager.cpp
+index d1d2ef8..4cea339 100644
+--- a/library/tulip-ogl/src/OpenGlConfigManager.cpp
++++ b/library/tulip-ogl/src/OpenGlConfigManager.cpp
+@@ -61,20 +61,6 @@ void OpenGlConfigManager::checkDrivers() {
+     return;
+ 
+   driversAreChecked=true;
+-
+-  bool nvidia=false;
+-  bool ati=false;
+-  string vendor(getOpenGLVendor());
+-
+-  if(vendor.find("NVIDIA")!=string::npos)
+-    nvidia=true;
+-
+-  if(vendor.find("ATI")!=string::npos)
+-    ati=true;
+-
+-  if(!nvidia && !ati) {
+-    QMessageBox::warning(NULL,QObject::trUtf8("Graphics card warning"), QObject::trUtf8("Your graphics card is not powerful enough or is not configured with the proper drivers. For optimal performances, make sure to install the properietary drivers corresponding to your graphics card model."));
+-  }
+ }
+ 
+ double OpenGlConfigManager::getOpenGLVersion() {

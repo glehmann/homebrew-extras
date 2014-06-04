@@ -119,3 +119,17 @@ index f6692dd..23e4226 100644
  
    return DIA_RENDERER(renderer);
  }
+--- a/plug-ins/postscript/diapsft2renderer.c	2009-11-07 11:13:53.000000000 -0600
++++ b/plug-ins/postscript/diapsft2renderer.c	2013-12-02 18:49:27.000000000 -0600
+@@ -29,8 +29,9 @@
+ #include <pango/pangoft2.h>
+ #include <pango/pango-engine.h>
+ /* I'd really rather avoid this */
+-#include <freetype/ftglyph.h>
+-#include <freetype/ftoutln.h>
++#include <ft2build.h>
++#include FT_GLYPH_H
++#include FT_OUTLINE_H
+ 
+ #define DPI 300
+ 

@@ -13,6 +13,7 @@ class Dia < Formula
   depends_on 'libtiff'
   depends_on 'gtk+'
   depends_on :x11
+  depends_on 'freetype'
 
   def patches
     # fixes compilation with glib 2.31+

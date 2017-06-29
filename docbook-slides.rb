@@ -3,7 +3,7 @@ require 'formula'
 class DocbookSlides < Formula
   homepage 'http://docbook.sourceforge.net/'
   url 'http://sourceforge.net/projects/docbook/files/slides/3.4.0/docbook-slides-3.4.0.tar.bz2'
-  sha1 '798b43ebbbb6a49c67335aa86d5cad33d61015c2'
+  sha256 "0aee34fe68ba9b45e8a70ef43ff2b85878cd8f374c646fe8d8bcd4ad0db3400e"
 
   depends_on 'docbook'
 

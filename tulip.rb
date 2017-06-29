@@ -3,11 +3,11 @@ require "formula"
 class Tulip < Formula
   homepage "http://tulip.labri.fr/"
   url "http://downloads.sourceforge.net/project/auber/tulip/tulip-4.6.0/tulip-4.6.0_src.tar.gz"
-  sha1 "8c624ccfd2d361df6479ca5df5e1de984df63ce3"
+  sha256 "6012dab496883b4e835bf7b4d7c2b7f4df7f5e05c00a2345f8a0d93d5c2eacd7"
 
   bottle do
-    root_url "https://raw.githubusercontent.com/glehmann/homebrew-extras-bottle/master"
-    sha1 "0e092a8bfdb7d048d9860fd206c0371cf2020af7" => :mavericks
+    root_url "https://github.com/glehmann/homebrew-extras-bottle/blob/master/tulip-4.6.0.mavericks.bottle.tar.gz?raw=true"
+    sha256 "cd777bc4f017a965fa57d0cddc13285ce6c66aea51a780417925bd4f9f937c00" => :mavericks
   end
 
   depends_on "cmake" => :build

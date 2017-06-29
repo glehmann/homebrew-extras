@@ -3,7 +3,7 @@ require 'formula'
 class CcacheClang < Formula
   homepage 'http://ccache.samba.org/'
   url 'http://samba.org/ftp/ccache/ccache-3.1.9.tar.bz2'
-  sha1 'e80a5cb7301e72f675097246d722505ae56e3cd3'
+  sha256 "04d3e2e438ac8d4cc4b110b68cdd61bd59226c6588739a4a386869467f5ced7c"
 
   head do
     url 'https://github.com/jrosdahl/ccache.git'

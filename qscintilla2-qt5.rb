@@ -3,11 +3,11 @@ require 'formula'
 class Qscintilla2Qt5 < Formula
   homepage 'http://www.riverbankcomputing.co.uk/software/qscintilla/intro'
   url "https://downloads.sf.net/project/pyqt/QScintilla2/QScintilla-2.8.4/QScintilla-gpl-2.8.4.tar.gz"
-  sha1 "7e15c261a7c1842f3a75e4878a880ab667224494"
+  sha256 "9b7b2d7440cc39736bbe937b853506b3bd218af3b79095d4f710cccb0fabe80f"
 
   bottle do
-    root_url "https://raw.githubusercontent.com/glehmann/homebrew-extras-bottle/master"
-    sha1 "87ede31e24708b457f3a7c9454b339a39c01f1d6" => :mavericks
+    root_url "https://github.com/glehmann/homebrew-extras-bottle/blob/master/qscintilla2-qt5-2.8.4.mavericks.bottle.tar.gz?raw=true"
+    sha256 "852b60acb291bc078bfb98868cbd5be7a2914b175575286a76ce9abbcfc35b9b" => :mavericks
   end
 
   depends_on :python => :optional
